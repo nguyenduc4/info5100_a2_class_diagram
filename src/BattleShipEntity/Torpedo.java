@@ -6,6 +6,8 @@ package BattleShipEntity;
 import java.util.List;
 import java.util.ArrayList;
 
+import Player.Player;
+
 /**
  *
  * @author Duc Nguyen
@@ -13,10 +15,13 @@ import java.util.ArrayList;
 public class Torpedo {
     public int torpedo_id;
     public List<int[]> coordinates;
+    
+    private Player player;
        
-    public Torpedo(int x, int y) { 
+    public Torpedo(int x, int y, Player player) { 
         this.coordinates = new ArrayList<>();
-
+        
+        this.player = player;
     }
     
     public void shot_torpedo(int x, int y) { 

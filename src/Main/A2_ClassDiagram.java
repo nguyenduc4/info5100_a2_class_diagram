@@ -28,18 +28,23 @@ public class A2_ClassDiagram {
         Computer computerPlayer = new Computer(2, "Computer");
 
         // Create a new game between human and computer
-        Game battleShipGame = new Game("Human vs Computer");
+        Game battleShipGame = new Game("Human vs Computer", humanPlayer, computerPlayer);
 
         // Start the game
         battleShipGame.startGame();
         
+        // Add game to game history of each player
+        humanPlayer.addGame(battleShipGame);
+        computerPlayer.addGame(battleShipGame);
+        
         // Create ships for both players
         // Ship is created :
-        //      ship_id, ship_size, ship_value, ship_health
-        Ship humanShip1 = new Ship(1, 1, 5, 1); 
-        Ship humanShip2 = new Ship(2, 2, 7, 2); 
-        Ship computerShip1 = new Ship(3, 1, 5, 1); 
-        Ship computerShip2 = new Ship(4, 2, 7, 2); 
+        //      ship_id, ship_size, ship_value, ship_health, ship own by
+        Ship humanShip1 = new Ship(1, 1, 5, 1,humanPlayer); 
+        Ship humanShip2 = new Ship(2, 2, 7, 2, humanPlayer); 
+        
+        Ship computerShip1 = new Ship(3, 1, 5, 1, computerPlayer); 
+        Ship computerShip2 = new Ship(4, 2, 7, 2, computerPlayer); 
 
         // Add ships to both players
         //      In this demo, I only add 2 ship to each player, for best testing
@@ -50,8 +55,10 @@ public class A2_ClassDiagram {
 
         // Manually place ships on the grid
         //      In the future, this can be developed furthermore, however in this assigment I manually set the position
+        // @params: x: x_coordinate , y: y_coordinate, ishorizontal: check the position of the ship
         humanShip1.setShipPosition(1, 1, true); 
         humanShip2.setShipPosition(5, 5, false); 
+        
         computerShip1.setShipPosition(3, 3, true);
         computerShip2.setShipPosition(7, 7, false); 
 
@@ -61,10 +68,9 @@ public class A2_ClassDiagram {
         System.out.println("Computer Player Ship Info:");
         computerPlayer.getShipList();
 
-        // Battle loop: 
+        // Battle loop: check if game is ended or not
         //      Players will fire torpedoes until one player loses all ships
-        boolean gameInProgress = true;
-        while (gameInProgress) {
+        while (!battleShipGame.isEndGame()) {
             // Human player's turn to shot torpedo
             System.out.println("\n------------------------------------------------------------------------------");
             System.out.println("\nHuman Player's turn to fire. Enter coordinates - enter x first and y (x y): ");
@@ -75,13 +81,13 @@ public class A2_ClassDiagram {
             // Check if human hits any of the computer's ships
             if (computerShip1.isHit(x, y)) {
                 System.out.println("Human hit Computer's Ship 1!");
-                computerShip1.take_damage();
+                computerShip1.takeDamage();
                 if (computerShip1.isEliminate()) {
                     System.out.println("Computer's Ship 1 is eliminated!");
                 }
             } else if (computerShip2.isHit(x, y)) {
                 System.out.println("Human hit Computer's Ship 2!");
-                computerShip2.take_damage();
+                computerShip2.takeDamage();
                 if (computerShip2.isEliminate()) {
                     System.out.println("Computer's Ship 2 is eliminated!");
                 }
@@ -94,7 +100,8 @@ public class A2_ClassDiagram {
                 System.out.println("Computer has lost all ships! Human wins!");
                 humanPlayer.collectScoreAfterGame("win");
                 computerPlayer.collectScoreAfterGame("lose");
-                gameInProgress = false;
+                // End the game
+                battleShipGame.endGame();
                 break;
             }
 
@@ -107,13 +114,13 @@ public class A2_ClassDiagram {
             // Check if computer hits any of the human's ships
             if (humanShip1.isHit(computerX, computerY)) {
                 System.out.println("Computer hit Human's Ship 1!");
-                humanShip1.take_damage();
+                humanShip1.takeDamage();
                 if (humanShip1.isEliminate()) {
                     System.out.println("Human's Ship 1 is eliminated!");
                 }
             } else if (humanShip2.isHit(computerX, computerY)) {
                 System.out.println("Computer hit Human's Ship 2!");
-                humanShip2.take_damage();
+                humanShip2.takeDamage();
                 if (humanShip2.isEliminate()) {
                     System.out.println("Human's Ship 2 is eliminated!");
                 }
@@ -126,7 +133,7 @@ public class A2_ClassDiagram {
                 System.out.println("Human has lost all ships! Computer wins!");
                 computerPlayer.collectScoreAfterGame("win");
                 humanPlayer.collectScoreAfterGame("lose");
-                gameInProgress = false;
+                battleShipGame.endGame();
                 break;
             }
         }

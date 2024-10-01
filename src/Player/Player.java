@@ -51,7 +51,7 @@ public class Player {
 
     public void getShipList() { 
         for(Ship ship : this.ship_list) { 
-            System.out.println("Ship ID: " + ship.getShip_id() + " Size: " + ship.getSize() + " Value: " + ship.getValue() + " Health: " + ship.getHealth() + " Is Eliminiate: " + ship.isEliminate());
+            System.out.println("Ship ID: " + ship.getShipId() + " Size: " + ship.getSize() + " Value: " + ship.getValue() + " Health: " + ship.getHealth() + " Is Eliminiate: " + ship.isEliminate());
         }
     }
 
@@ -69,7 +69,7 @@ public class Player {
     
     public void shotTorpedo(int x, int y) { 
         if(this.torpedoes_count > 0) { 
-            Torpedo torpedo = new Torpedo(x,y);
+            Torpedo torpedo = new Torpedo(x,y, this);
             this.shot_history.add(torpedo);
             this.torpedoes_count--;
         }else { 
@@ -90,7 +90,7 @@ public class Player {
         }
     }
     
-    public void createGame(Game game) { 
+    public void addGame(Game game) { 
         this.game_history.add(game);
     }
 }

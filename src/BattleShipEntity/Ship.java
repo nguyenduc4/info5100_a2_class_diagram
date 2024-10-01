@@ -6,7 +6,7 @@ package BattleShipEntity;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import Player.Player;
 /**
  *
  * @author danie
@@ -18,21 +18,24 @@ public class Ship {
     private int health;
     private boolean is_down;
     private List<int[]> ship_position;
+
+    private Player player;
     
-    public Ship(int ship_id, int size, int value, int health) {
+    public Ship(int ship_id, int size, int value, int health, Player player) {
         this.ship_id = ship_id;
         this.size = size;
         this.value = value;
         this.health = health;
         this.is_down = false;
         this.ship_position = new ArrayList<>();
+        this.player = player;
     }
 
-    public int getShip_id() {
+    public int getShipId() {
         return ship_id;
     }
 
-    public void setShip_id(int ship_id) {
+    public void setShipId(int ship_id) {
         this.ship_id = ship_id;
     }
 
@@ -64,22 +67,22 @@ public class Ship {
         return is_down;
     }
 
-    public void set_isEliminate(boolean is_down) {
+    public void setIsEliminated(boolean is_down) {
         this.is_down = is_down;
     }
     
-    public void display_status() { 
+    public void displayStatus() { 
         System.out.println("Your ship is: " + (this.is_down ? "Down" : "Alive"));
     }
     
-    public void take_damage() {
+    public void takeDamage() {
         this.health --; 
         if(this.health <= 0) { 
             this.is_down = true;
         }
     }
     
-    public String display_info() { 
+    public String displayInfo() { 
         String ship_information = "Ship ID: " + this.ship_id + ", Size: " + this.size + ", Value: " + this.value + ", Health: " +this.health + ", is_eliminated: " + this.is_down;
         System.out.println(ship_information);
         return ship_information;

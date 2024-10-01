@@ -14,55 +14,59 @@ import BattleShipEntity.Ship;
  *
  * @author Duc Nguyen
  */
-public class GameBoard {
+public class Round {
     private int horizontal_size;
     private int vertical_size;
     private List<Torpedo> torpedo_position;
     private List<Ship> ship_position;
     
+    private Game game;
+    
     private int HORIZONTAL_SIZE = 8;
     private int VERTICAL_SIZE = 8;
 
-    public GameBoard() {
+    public Round(Game game) {
         this.horizontal_size = HORIZONTAL_SIZE;
         this.vertical_size = VERTICAL_SIZE;
-        this.torpedo_position = new ArrayList<>();
-        this.ship_position = new ArrayList<>();
+        this.torpedo_position = new ArrayList<Torpedo>();
+        this.ship_position = new ArrayList<Ship>();
+        
+        this.game = game;
     }
 
-    public int getHorizontal_size() {
+    public int getHorizontalSize() {
         return horizontal_size;
     }
 
-    public void setHorizontal_size(int horizontal_size) {
+    public void setHorizontalSize(int horizontal_size) {
         this.horizontal_size = horizontal_size;
     }
 
-    public int getVertical_size() {
+    public int getVerticalSize() {
         return vertical_size;
     }
 
-    public void setVertical_size(int vertical_size) {
+    public void setVerticalSize(int vertical_size) {
         this.vertical_size = vertical_size;
     }
 
-    public List<Torpedo> getTorpedo_position() {
+    public List<Torpedo> getTorpedoPosition() {
         return torpedo_position;
     }
 
-    public void setTorpedo_position(List<Torpedo> torpedo_position) {
+    public void setTorpedoPosition(List<Torpedo> torpedo_position) {
         this.torpedo_position = torpedo_position;
     }
 
-    public List<Ship> getShip_position() {
+    public List<Ship> getShipPosition() {
         return ship_position;
     }
 
-    public void setShip_position(List<Ship> ship_position) {
+    public void setShipPosition(List<Ship> ship_position) {
         this.ship_position = ship_position;
     }
     
-    public void addShip(Ship ship) { 
+    public void addShip(Ship ship) {
         this.ship_position.add(ship);
     }
     
